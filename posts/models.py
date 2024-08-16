@@ -15,7 +15,7 @@ class Tag(models.Model):
 
 class Post(models.Model):
 
-    image = models.ImageField(null=True, upload_to="posts")
+    image = models.ImageField(null=True, upload_to="posts", blank=True)
     title = models.CharField(max_length=50)
     content = models.TextField(null=True, blank=True)
     rate = models.IntegerField(default=0)
