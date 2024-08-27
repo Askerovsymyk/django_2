@@ -1,27 +1,33 @@
 {% extends 'posts/main.html' %}
-{%load static%}
-
+{% load static %}
 
 <body>
-{% block content %}
-{% for post in posts %}
-<div class="card" style="width: 18rem;">
-    {%if post.image%}
-    <img src="{{post.image.url}}" class="card-img-top" alt="...">
-    {%else%}
-    <img src="staticfiles/img.png" class="card-img-top" alt="...">
-    {%endif%}
-    <div class="card-body">
-        <h5 class="card-title">{{ post.title }}</h5>
-        <p class="card-text">{{ post.content }}</p>
-        <p class="card-text">{{ post.rate }}</p>
-       <a href="/posts/{{ post.id }}" class="btn btn-primary">далее</a>
-
+    {% block content %}
+    <form style="padding-left: 18px;" action='' method='get'>
+        {{ search_form.as_p }}
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+    {% for post in posts %}
+    <div class="card" style="width: 18rem;">
+        {% if post.image %}
+        <img src="{{ post.image.url }}" class="card-img-top" alt="...">
+        {% else %}
+        <img src="{% static 'img.png' %}" class="card-img-top" alt="...">
+        {% endif %}
+        <div class="card-body">
+            <h5 class="card-title">{{ post.title }}</h5>
+            <p class="card-text">{{ post.content }}</p>
+            <p class="card-text">{{ post.rate }}</p>
+            <a href="/posts/{{ post.id }}" class="btn btn-primary">далее</a>
+        </div>
     </div>
-</div>
-{% endfor %}
-{% endblock %}
+    {% endfor %}
+    <div style="display:flex; justify-content: center; margin-top: 20px; margin-bottom: 15px">
+        {%for page in max_pages%}
+        <a href="/posts/?page=({page})" class="btn btn-primary">
+            ({page})
+        </a>
+    {%endfor%}
+    </div>
+    {%endblock%}
 </body>
-
-
-
