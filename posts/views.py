@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 from posts.forms import SearchForm
 from django.db.models import Q
-
+from posts.forms import PostUpdateForm
 
 def home_view(request):
     return render(request, "posts/main.html")
@@ -66,4 +66,15 @@ def post_create_view(request):
         rate = request.POST.get("rate")
         Post.objects.create(image=image, title=title, content=content, rate=rate)
         return redirect("/posts/")
-
+@login_required(login_url="user_login")
+def post_update_view(request, post_id):
+    post = Post.objects.get(id=post_id)
+    if request.method == "GET":
+        form = PostUpdateForm(instance=post)
+        return render(request=request, template_name="posts/post_update.html", context={"form": form, "post": post})
+    if request.method == "POST":
+        form = PostUpdateForm(request.POST, request.FILES, instance=post)
+        if not form.is_valid():
+            return render(request=request, template_name="posts/post_update.html", context={"form": form, "post": post})
+        form.save()
+        return redirect("/profile/")

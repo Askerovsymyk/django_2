@@ -7,12 +7,15 @@
     {%if post.image%}
     <img src="{{post.image.url}}" class="card-img-top" alt="...">
     {%else%}
-    <img src="staticfiles/img.png" class="card-img-top" alt="...">
+    <img src="static img.png" class="card-img-top" alt="...">
     {%endif%}
     <div class="card-body">
         <h5 class="card-title">{{ post.title }}</h5>
         <p class="card-text">{{ post.content }}</p>
         <p class="card-text">{{ post.rate }}</p>
+        {% if post.author == request.user %}
+        <a href="/posts/{{post.id}}/update" class="btn btn-primary"> Update Post</a>
+        {%endif%}
     </div>
 </div>
 {% endblock %}

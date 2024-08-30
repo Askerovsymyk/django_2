@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.contrib.auth.models import User
 # Create your models here.
 
 class Category(models.Model):
@@ -14,7 +14,7 @@ class Tag(models.Model):
         return self.name
 
 class Post(models.Model):
-
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name="posts", null=True, blank=True)
     image = models.ImageField(null=True, upload_to="posts", blank=True)
     title = models.CharField(max_length=50)
     content = models.TextField(null=True, blank=True)

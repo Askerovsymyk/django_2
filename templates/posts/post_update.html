@@ -1,0 +1,21 @@
+
+
+
+{% extends 'posts/main.html' %}
+{% load static %}
+{%block content%}
+<h1> POST {{post.id}} PAGEv</h1>
+<div class="card" style="width: 18rem;"
+        {% if post.image %}
+        <img src="{{ post.image.url }}" class="card-img-top" alt="...">
+        {% else %}
+        <img src="{% static 'img.png' %}" class="card-img-top" alt="...">
+        {% endif %}
+        <div class="card-body">
+            <h5 class="card-title">{{ post.title }}</h5>
+            <p class="card-text">{{ post.content }}</p>
+            <p class="card-text">{{ post.rate }}</p>
+            <a href="/post/{{ post.id }}/update" class="btn btn-primary">Confirm</a>
+        </div>
+    </div>
+{%endblock%}

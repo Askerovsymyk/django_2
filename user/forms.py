@@ -4,7 +4,7 @@
 from django import forms
 
 class UserRegisterForm(forms.Form):
-
+    image = forms.ImageField(required=False)
     user_name = forms.CharField(max_length=50)
     email = forms.EmailField(max_length=50)
     first_name = forms.CharField(max_length=50)
